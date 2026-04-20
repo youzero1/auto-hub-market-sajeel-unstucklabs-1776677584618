@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { CheckCircle, Upload } from 'lucide-react';
+import { CheckCircle, Upload, Sparkles } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
@@ -27,166 +27,132 @@ export default function SellPage() {
     setSubmitted(true);
   };
 
+  const inputClass = "w-full bg-slate-800/50 border border-white/5 focus:border-blue-500/50 rounded-xl px-4 py-3 text-slate-200 placeholder-slate-600 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500/30 transition-all";
+  const labelClass = "block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2";
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-slate-950">
       <Navbar />
-      <div className="bg-gradient-to-r from-slate-900 to-blue-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-extrabold mb-2">Sell Your Car</h1>
-          <p className="text-slate-300">List your vehicle and reach thousands of buyers</p>
+
+      {/* Header */}
+      <div className="relative bg-slate-900 border-b border-white/5 py-14 overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-1/3 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/3 w-64 h-64 bg-violet-600/10 rounded-full blur-3xl" />
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-blue-400 text-sm font-semibold uppercase tracking-widest mb-2">Sell</p>
+          <h1 className="text-4xl sm:text-5xl font-black text-white mb-2">Sell Your Car</h1>
+          <p className="text-slate-400">List your vehicle and reach thousands of buyers</p>
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {submitted ? (
-          <div className="text-center py-20">
-            <CheckCircle className="mx-auto text-green-500 mb-6" size={72} />
-            <h2 className="text-3xl font-extrabold text-gray-900 mb-4">Listing Submitted!</h2>
-            <p className="text-gray-500 text-lg mb-8">Your car listing has been submitted for review. We&apos;ll notify you once it&apos;s approved and live.</p>
+          <div className="text-center py-24">
+            <div className="w-24 h-24 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center mx-auto mb-6">
+              <CheckCircle className="text-green-400" size={48} />
+            </div>
+            <h2 className="text-3xl font-black text-white mb-4">Listing Submitted!</h2>
+            <p className="text-slate-400 text-base mb-10 max-w-md mx-auto leading-relaxed">
+              Your car listing has been submitted for review. We&apos;ll notify you once it&apos;s approved and live.
+            </p>
             <button
               onClick={() => setSubmitted(false)}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3 rounded-xl transition-colors"
+              className="bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-500 hover:to-violet-500 text-white font-bold px-8 py-3.5 rounded-xl transition-all shadow-lg shadow-blue-500/20"
             >
               Submit Another Listing
             </button>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-8">
+          <form onSubmit={handleSubmit} className="space-y-6">
             {/* Car Details */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-6">Car Details</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="bg-slate-900 border border-white/5 rounded-2xl p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                  <Sparkles size={15} className="text-blue-400" />
+                </div>
+                <h2 className="text-lg font-bold text-white">Car Details</h2>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Make *</label>
-                  <input
-                    type="text"
-                    name="make"
-                    required
-                    value={form.make}
-                    onChange={handleChange}
-                    placeholder="e.g. Toyota"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
-                  />
+                  <label className={labelClass}>Make *</label>
+                  <input type="text" name="make" required value={form.make} onChange={handleChange} placeholder="e.g. Toyota" className={inputClass} />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Model *</label>
-                  <input
-                    type="text"
-                    name="model"
-                    required
-                    value={form.model}
-                    onChange={handleChange}
-                    placeholder="e.g. Camry"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
-                  />
+                  <label className={labelClass}>Model *</label>
+                  <input type="text" name="model" required value={form.model} onChange={handleChange} placeholder="e.g. Camry" className={inputClass} />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Year *</label>
-                  <input
-                    type="number"
-                    name="year"
-                    required
-                    value={form.year}
-                    onChange={handleChange}
-                    placeholder="e.g. 2022"
-                    min="1990"
-                    max="2025"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
-                  />
+                  <label className={labelClass}>Year *</label>
+                  <input type="number" name="year" required value={form.year} onChange={handleChange} placeholder="e.g. 2022" min="1990" max="2025" className={inputClass} />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Mileage (miles) *</label>
-                  <input
-                    type="number"
-                    name="mileage"
-                    required
-                    value={form.mileage}
-                    onChange={handleChange}
-                    placeholder="e.g. 25000"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
-                  />
+                  <label className={labelClass}>Mileage (miles) *</label>
+                  <input type="number" name="mileage" required value={form.mileage} onChange={handleChange} placeholder="e.g. 25000" className={inputClass} />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Asking Price ($) *</label>
-                  <input
-                    type="number"
-                    name="price"
-                    required
-                    value={form.price}
-                    onChange={handleChange}
-                    placeholder="e.g. 25000"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
-                  />
+                  <label className={labelClass}>Asking Price ($) *</label>
+                  <input type="number" name="price" required value={form.price} onChange={handleChange} placeholder="e.g. 25000" className={inputClass} />
                 </div>
               </div>
-              <div className="mt-6">
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Description</label>
+              <div className="mt-5">
+                <label className={labelClass}>Description</label>
                 <textarea
                   name="description"
                   rows={4}
                   value={form.description}
                   onChange={handleChange}
                   placeholder="Describe your car, condition, history, etc."
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 resize-none"
+                  className={`${inputClass} resize-none`}
                 />
               </div>
             </div>
 
             {/* Photo Upload */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-6">Photos</h2>
-              <div className="border-2 border-dashed border-gray-200 rounded-xl p-12 text-center hover:border-blue-400 transition-colors cursor-pointer">
-                <Upload className="mx-auto text-gray-400 mb-3" size={36} />
-                <p className="text-gray-600 font-medium">Click to upload or drag and drop</p>
-                <p className="text-sm text-gray-400 mt-1">PNG, JPG up to 10MB each (max 10 photos)</p>
+            <div className="bg-slate-900 border border-white/5 rounded-2xl p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-8 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center">
+                  <Upload size={15} className="text-violet-400" />
+                </div>
+                <h2 className="text-lg font-bold text-white">Photos</h2>
+              </div>
+              <div className="border-2 border-dashed border-white/10 hover:border-blue-500/40 rounded-2xl p-12 text-center transition-colors cursor-pointer group">
+                <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-500/10 transition-colors">
+                  <Upload className="text-slate-500 group-hover:text-blue-400 transition-colors" size={24} />
+                </div>
+                <p className="text-slate-400 font-medium text-sm">Click to upload or drag and drop</p>
+                <p className="text-xs text-slate-600 mt-1">PNG, JPG up to 10MB each (max 10 photos)</p>
               </div>
             </div>
 
             {/* Contact Info */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-6">Contact Information</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="bg-slate-900 border border-white/5 rounded-2xl p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-8 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center">
+                  <span className="text-green-400 text-sm">✓</span>
+                </div>
+                <h2 className="text-lg font-bold text-white">Contact Information</h2>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Full Name *</label>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    value={form.name}
-                    onChange={handleChange}
-                    placeholder="Your full name"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
-                  />
+                  <label className={labelClass}>Full Name *</label>
+                  <input type="text" name="name" required value={form.name} onChange={handleChange} placeholder="Your full name" className={inputClass} />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Email *</label>
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    value={form.email}
-                    onChange={handleChange}
-                    placeholder="you@example.com"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
-                  />
+                  <label className={labelClass}>Email *</label>
+                  <input type="email" name="email" required value={form.email} onChange={handleChange} placeholder="you@example.com" className={inputClass} />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Phone</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={form.phone}
-                    onChange={handleChange}
-                    placeholder="+1 (555) 000-0000"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
-                  />
+                  <label className={labelClass}>Phone</label>
+                  <input type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder="+1 (555) 000-0000" className={inputClass} />
                 </div>
               </div>
             </div>
 
             <button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl text-lg transition-colors shadow-lg"
+              className="w-full bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-500 hover:to-violet-500 text-white font-bold py-4 rounded-xl text-base transition-all shadow-2xl shadow-blue-500/20 hover:shadow-blue-500/30"
             >
               Submit Listing
             </button>

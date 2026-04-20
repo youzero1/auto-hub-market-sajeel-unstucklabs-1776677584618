@@ -18,7 +18,8 @@ export default function CarsPage() {
   const priceRanges = ['All', 'Under $20K', '$20K - $40K', '$40K - $60K', 'Over $60K'];
 
   const filteredCars = featuredCars.filter((car: Car) => {
-    const matchSearch = car.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    const matchSearch =
+      car.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       car.make.toLowerCase().includes(searchTerm.toLowerCase());
     const matchCategory = selectedCategory === 'All' || car.category === selectedCategory;
     let matchPrice = true;
@@ -30,54 +31,69 @@ export default function CarsPage() {
   });
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-slate-950">
       <Navbar />
-      <div className="bg-gradient-to-r from-slate-900 to-blue-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-extrabold mb-2">Browse Cars</h1>
-          <p className="text-slate-300">Discover your perfect vehicle from our extensive inventory</p>
+
+      {/* Page Header */}
+      <div className="relative bg-slate-900 border-b border-white/5 py-14 overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-1/4 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-violet-600/10 rounded-full blur-3xl" />
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <p className="text-blue-400 text-sm font-semibold uppercase tracking-widest mb-2">Inventory</p>
+          <h1 className="text-4xl sm:text-5xl font-black text-white mb-2">Browse Cars</h1>
+          <p className="text-slate-400">Discover your perfect vehicle from our extensive inventory</p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Search & Filter Bar */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 mb-8 flex flex-col sm:flex-row gap-4">
+        <div className="bg-slate-900 border border-white/5 rounded-2xl p-3 mb-6 flex flex-col sm:flex-row gap-3">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
             <input
               type="text"
               placeholder="Search by make, model..."
               value={searchTerm}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
+              className="w-full bg-white/5 pl-11 pr-4 py-3 border border-white/5 rounded-xl focus:outline-none focus:ring-1 focus:ring-blue-500/50 text-slate-200 placeholder-slate-600 text-sm"
             />
           </div>
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2.5 rounded-xl font-medium transition-colors"
+            className={`flex items-center gap-2 px-5 py-3 rounded-xl font-medium transition-all text-sm ${
+              showFilters
+                ? 'bg-blue-600 text-white'
+                : 'bg-white/5 border border-white/5 text-slate-400 hover:text-white hover:bg-white/10'
+            }`}
           >
-            <SlidersHorizontal size={18} />
+            <SlidersHorizontal size={16} />
             Filters
           </button>
         </div>
 
         {/* Filter Panel */}
         {showFilters && (
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-8">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-gray-900">Filters</h3>
-              <button onClick={() => setShowFilters(false)}><X size={18} className="text-gray-500" /></button>
+          <div className="bg-slate-900 border border-white/5 rounded-2xl p-6 mb-6">
+            <div className="flex items-center justify-between mb-5">
+              <h3 className="font-bold text-white">Filters</h3>
+              <button onClick={() => setShowFilters(false)} className="text-slate-500 hover:text-white transition-colors">
+                <X size={16} />
+              </button>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Category</label>
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Category</label>
                 <div className="flex flex-wrap gap-2">
                   {categories.map((cat) => (
                     <button
                       key={cat}
                       onClick={() => setSelectedCategory(cat)}
-                      className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                        selectedCategory === cat ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      className={`px-4 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                        selectedCategory === cat
+                          ? 'bg-gradient-to-r from-blue-600 to-violet-600 text-white shadow-lg shadow-blue-500/20'
+                          : 'bg-white/5 border border-white/5 text-slate-400 hover:text-white hover:bg-white/10'
                       }`}
                     >
                       {cat}
@@ -86,14 +102,16 @@ export default function CarsPage() {
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Price Range</label>
+                <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Price Range</label>
                 <div className="flex flex-wrap gap-2">
                   {priceRanges.map((range) => (
                     <button
                       key={range}
                       onClick={() => setPriceRange(range)}
-                      className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                        priceRange === range ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      className={`px-4 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                        priceRange === range
+                          ? 'bg-gradient-to-r from-blue-600 to-violet-600 text-white shadow-lg shadow-blue-500/20'
+                          : 'bg-white/5 border border-white/5 text-slate-400 hover:text-white hover:bg-white/10'
                       }`}
                     >
                       {range}
@@ -105,38 +123,43 @@ export default function CarsPage() {
           </div>
         )}
 
-        <p className="text-gray-500 mb-6">{filteredCars.length} vehicles found</p>
+        <p className="text-slate-500 text-sm mb-6">
+          <span className="text-white font-semibold">{filteredCars.length}</span> vehicles found
+        </p>
 
         {/* Car Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredCars.map((car: Car) => (
-            <Link key={car.id} href={`/cars/${car.id}`} className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all overflow-hidden border border-gray-100">
+            <Link
+              key={car.id}
+              href={`/cars/${car.id}`}
+              className="group bg-slate-900 border border-white/5 hover:border-blue-500/20 rounded-2xl overflow-hidden card-hover"
+            >
               <div className="relative h-52 overflow-hidden">
                 <Image
                   src={car.image}
                   alt={car.title}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
                 {car.badge && (
-                  <span className="absolute top-3 left-3 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                  <span className="absolute top-3 left-3 bg-gradient-to-r from-blue-600 to-violet-600 text-white text-xs font-bold px-3 py-1 rounded-full">
                     {car.badge}
                   </span>
                 )}
               </div>
               <div className="p-5">
-                <div className="flex items-start justify-between">
+                <div className="flex items-start justify-between gap-2">
                   <div>
-                    <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{car.title}</h3>
-                    <p className="text-sm text-gray-500 mt-0.5">{car.year} · {car.mileage} · {car.transmission}</p>
+                    <h3 className="text-base font-bold text-white group-hover:text-blue-400 transition-colors">{car.title}</h3>
+                    <p className="text-xs text-slate-500 mt-1">{car.year} · {car.mileage} · {car.transmission}</p>
                   </div>
-                  <div className="text-right">
-                    <div className="text-xl font-extrabold text-blue-600">${car.price.toLocaleString()}</div>
-                  </div>
+                  <div className="text-lg font-black text-blue-400 whitespace-nowrap">${car.price.toLocaleString()}</div>
                 </div>
-                <div className="mt-4 flex flex-wrap gap-2">
+                <div className="mt-4 flex flex-wrap gap-1.5">
                   {car.features.slice(0, 3).map((f) => (
-                    <span key={f} className="bg-gray-100 text-gray-600 text-xs px-2.5 py-1 rounded-full">{f}</span>
+                    <span key={f} className="bg-white/5 border border-white/5 text-slate-400 text-xs px-2.5 py-1 rounded-lg">{f}</span>
                   ))}
                 </div>
               </div>
@@ -145,10 +168,10 @@ export default function CarsPage() {
         </div>
 
         {filteredCars.length === 0 && (
-          <div className="text-center py-24">
-            <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-2xl font-bold text-gray-700 mb-2">No cars found</h3>
-            <p className="text-gray-500">Try adjusting your search or filter criteria.</p>
+          <div className="text-center py-32">
+            <div className="text-6xl mb-6">🔍</div>
+            <h3 className="text-2xl font-bold text-white mb-2">No cars found</h3>
+            <p className="text-slate-500">Try adjusting your search or filter criteria.</p>
           </div>
         )}
       </div>
